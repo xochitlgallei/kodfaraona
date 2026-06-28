@@ -1,137 +1,63 @@
-const button = document.getElementById("rollButton");
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.start-btn');
 
-const dice = [
-    {
-        sides: 8,
-        die: document.getElementById("die8"),
-        value: document.getElementById("value8")
-    },
-    {
-        sides: 10,
-        die: document.getElementById("die10"),
-        value: document.getElementById("value10")
-    },
-    {
-        sides: 12,
-        die: document.getElementById("die12"),
-        value: document.getElementById("value12")
-    }
-];
+  const dice = [
+    { el: document.querySelector('.die-d8'),  sides: 8  },
+    { el: document.querySelector('.die-d10'), sides: 10 },
+    { el: document.querySelector('.die-d12'), sides: 12 }
+  ];
 
-let isRolling = false;
+  dice.forEach(d => {
+    d.valueEl = d.el.querySelector('.value');
+  });
 
-function rnd(max) {
-    return Math.floor(Math.random() * max) + 1;
-}
+  const ROLL_DURATION = 1000; // ~1 секунда «трясучки»
+  const TICK_MIN = 60;        // мс
+  const TICK_MAX = 80;        // мс
 
-function animateNumber(item) {
+  let isRolling = false;
 
-    item.value.classList.add("number-change");
+  const randInt = (max) => Math.floor(Math.random() * max) + 1;
+  const randTick = () => TICK_MIN + Math.random() * (TICK_MAX - TICK_MIN);
 
-    setTimeout(() => {
-        item.value.classList.remove("number-change");
-    }, 70);
+  const rollDie = (die, stopAt) => {
+    let tickTimer = null;
 
-}
+    const scheduleTick = () => {
+      tickTimer = setTimeout(() => {
+        if (Date.now() >= stopAt) {
+          die.valueEl.textContent = randInt(die.sides);
+          return;
+        }
+        die.valueEl.textContent = randInt(die.sides);
+        scheduleTick();
+      }, randTick());
+    };
 
-let flashState = 0;
+    scheduleTick();
 
-function flash(item) {
+    return () => clearTimeout(tickTimer);
+  };
 
-    item.die.classList.remove(
-        "flash-dark",
-        "flash-normal",
-        "flash-light"
-    );
-
-    switch (flashState) {
-
-        case 0:
-            item.die.classList.add("flash-dark");
-            break;
-
-        case 1:
-            item.die.classList.add("flash-light");
-            break;
-
-        case 2:
-            item.die.classList.add("flash-normal");
-            break;
-
-    }
-
-    flashState++;
-
-    if (flashState > 2)
-        flashState = 0;
-
-}
-
-function clearFlash(item) {
-
-    item.die.classList.remove(
-        "flash-dark",
-        "flash-light",
-        "flash-normal"
-    );
-
-}
-
-function stopDie(item) {
-
-    clearFlash(item);
-
-    item.value.textContent = rnd(item.sides);
-
-    animateNumber(item);
-
-}
-
-button.addEventListener("click", () => {
-
-    if (isRolling)
-        return;
-
+  btn.addEventListener('click', () => {
+    if (isRolling) return;
     isRolling = true;
+    btn.disabled = true;
 
-    button.disabled = true;
+    const stopAt = Date.now() + ROLL_DURATION;
 
-    const timer = setInterval(() => {
+    // Запускаем «трясучку» для всех трёх кубиков
+    const cancellers = dice.map(die => rollDie(die, stopAt));
 
-        dice.forEach(item => {
-
-            item.value.textContent = rnd(item.sides);
-
-            animateNumber(item);
-
-            flash(item);
-
-        });
-
-    }, 75);
-
+    // Останавливаем все три одновременно через ROLL_DURATION
     setTimeout(() => {
-
-        stopDie(dice[0]);
-
-    }, 1000);
-
-    setTimeout(() => {
-
-        stopDie(dice[1]);
-
-    }, 1200);
-
-    setTimeout(() => {
-
-        stopDie(dice[2]);
-
-        clearInterval(timer);
-
-        isRolling = false;
-
-        button.disabled = false;
-
-    }, 1400);
-
+      cancellers.forEach(cancel => cancel());
+      // Финальные значения (на случай, если последний tick не успел сработать ровно в stopAt)
+      dice.forEach(d => {
+        d.valueEl.textContent = randInt(d.sides);
+      });
+      isRolling = false;
+      btn.disabled = false;
+    }, ROLL_DURATION);
+  });
 });
