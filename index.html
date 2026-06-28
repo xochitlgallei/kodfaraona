@@ -4,47 +4,231 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Бросок кубиков</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      color: #0f172a;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      padding: 2rem 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .title {
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .dice-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(2rem, 5vw, 4rem);
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .die {
+      position: relative;
+      width: clamp(140px, 22vw, 220px);
+      height: clamp(140px, 22vw, 220px);
+    }
+
+    .die .label {
+      position: absolute;
+      top: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 700;
+      color: #0f172a;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .die svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.18));
+    }
+
+    .die .value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      user-select: none;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      z-index: 10;
+    }
+
+    .start-btn {
+      padding: clamp(0.9rem, 2vw, 1.1rem) clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 800;
+      color: #ffffff;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      letter-spacing: 0.03em;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .start-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(102, 126, 234, 0.55);
+    }
+
+    .start-btn:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .start-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 480px) {
+      .die .label {
+        top: -1.6rem;
+        font-size: 1rem;
+      }
+      .dice-container {
+        gap: clamp(1.5rem, 4vw, 2.5rem);
+      }
+    }
+  </style>
 </head>
 <body>
   <main class="container">
     <h1 class="title">Бросок кубиков</h1>
 
     <div class="dice-container">
-      <!-- d8: восьмиугольник -->
+      <!-- d8: восьмиугольник (8 сторон) -->
       <div class="die die-d8">
         <span class="label">d8</span>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="100,10 135,25 160,55 170,95 160,135 135,165 100,180 65,165 40,135 30,95 40,55 65,25" fill="#a855f7" stroke="#0f172a" stroke-width="6" stroke-linejoin="round"/>
-          <polygon points="100,22 128,34 148,58 156,90 148,122 128,146 100,158 72,146 52,122 44,90 52,58 72,34" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="100,15 160,40 185,100 160,160 100,185 40,160 15,100 40,40" fill="#a855f7" stroke="#0f172a" stroke-width="6" stroke-linejoin="round"/>
+          <polygon points="100,28 151,49 172,100 151,151 100,172 49,151 28,100 49,49" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
         </svg>
         <span class="value">2</span>
       </div>
 
-      <!-- d10: десятиугольник -->
+      <!-- d10: десятиугольник (10 сторон) -->
       <div class="die die-d10">
         <span class="label">d10</span>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="100,10 131,21 153,45 164,75 164,107 153,137 131,161 100,172 69,161 47,137 36,107 36,75 47,45 69,21" fill="#3b82f6" stroke="#0f172a" stroke-width="6" stroke-linejoin="round"/>
-          <polygon points="100,22 124,31 141,50 149,75 149,101 141,126 124,145 100,154 76,145 59,126 51,101 51,75 59,50 76,31" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="100,15 150,31 181,74 181,126 150,169 100,185 50,169 19,126 19,74 50,31" fill="#3b82f6" stroke="#0f172a" stroke-width="6" stroke-linejoin="round"/>
+          <polygon points="100,28 142,42 169,79 169,121 142,158 100,172 58,158 31,121 31,79 58,42" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
         </svg>
         <span class="value">5</span>
       </div>
 
-      <!-- d12: двенадцатиугольник -->
+      <!-- d12: двенадцатиугольник (12 сторон) -->
       <div class="die die-d12">
         <span class="label">d12</span>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="100,10 127,19 149,38 163,63 168,91 163,119 149,144 127,163 100,172 73,163 51,144 37,119 32,91 37,63 51,38 73,19" fill="#22c55e" stroke="#0f172a" stroke-width="6" stroke-linejoin="round"/>
-          <polygon points="100,22 121,29 138,44 149,64 153,86 149,108 138,128 121,143 100,150 79,143 62,128 51,108 47,86 51,64 62,44 79,29" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="100,15 143,26 174,57 185,100 174,143 143,174 100,185 57,174 26,143 15,100 26,57 57,26" fill="#22c55e" stroke="#0f172a" stroke-width="6" stroke-linejoin="round"/>
+          <polygon points="100,28 136,37 163,64 172,100 163,136 136,163 100,172 64,163 37,136 28,100 37,64 64,37" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
         </svg>
         <span class="value">6</span>
       </div>
     </div>
 
-    <button class="start-btn" type="button">🎲 СТАРТ</button>
+    <button class="start-btn" type="button">🎲 Новый раунд</button>
   </main>
 
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('.start-btn');
+
+      const dice = [
+        { el: document.querySelector('.die-d8'),  sides: 8  },
+        { el: document.querySelector('.die-d10'), sides: 10 },
+        { el: document.querySelector('.die-d12'), sides: 12 }
+      ];
+
+      dice.forEach(d => {
+        d.valueEl = d.el.querySelector('.value');
+      });
+
+      const ROLL_DURATION = 1000;
+      const TICK_MIN = 60;
+      const TICK_MAX = 80;
+
+      let isRolling = false;
+
+      const randInt = (max) => Math.floor(Math.random() * max) + 1;
+      const randTick = () => TICK_MIN + Math.random() * (TICK_MAX - TICK_MIN);
+
+      const rollDie = (die, stopAt) => {
+        let tickTimer = null;
+
+        const scheduleTick = () => {
+          tickTimer = setTimeout(() => {
+            if (Date.now() >= stopAt) {
+              die.valueEl.textContent = randInt(die.sides);
+              return;
+            }
+            die.valueEl.textContent = randInt(die.sides);
+            scheduleTick();
+          }, randTick());
+        };
+
+        scheduleTick();
+
+        return () => clearTimeout(tickTimer);
+      };
+
+      btn.addEventListener('click', () => {
+        if (isRolling) return;
+        isRolling = true;
+        btn.disabled = true;
+
+        const stopAt = Date.now() + ROLL_DURATION;
+        const cancellers = dice.map(die => rollDie(die, stopAt));
+
+        setTimeout(() => {
+          cancellers.forEach(cancel => cancel());
+          dice.forEach(d => {
+            d.valueEl.textContent = randInt(d.sides);
+          });
+          isRolling = false;
+          btn.disabled = false;
+        }, ROLL_DURATION);
+      });
+    });
+  </script>
 </body>
 </html>
