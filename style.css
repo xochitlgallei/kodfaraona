@@ -1,17 +1,17 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    background:#ffffff;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#fff;
+    color:#222;
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    color:#222;
 }
 
 .container{
@@ -20,17 +20,17 @@ body{
 }
 
 h1{
-    font-size:42px;
-    margin-bottom:55px;
+    font-size:60px;
+    margin-bottom:60px;
     font-weight:700;
 }
 
 .dice-container{
     display:flex;
     justify-content:center;
-    gap:60px;
+    gap:80px;
     flex-wrap:wrap;
-    margin-bottom:60px;
+    margin-bottom:55px;
 }
 
 .dice-block{
@@ -40,174 +40,173 @@ h1{
 }
 
 .dice-title{
-    font-size:28px;
+    font-size:30px;
     font-weight:bold;
     margin-bottom:18px;
-    letter-spacing:1px;
 }
 
-.dice{
+.die{
     width:220px;
     height:220px;
-    overflow:visible;
-    transition:
-        transform .18s ease,
-        filter .25s ease;
+    position:relative;
 }
 
-.dice:hover{
-    transform:scale(1.04);
+.dice-svg{
+    width:100%;
+    height:100%;
+    display:block;
+    transition:filter .12s linear;
 }
 
-.dice polygon:first-child{
+.outer{
     stroke:#222;
     stroke-width:6;
-    fill:#dddddd;
 }
 
-.dice .inner{
-    stroke:#ffffff;
-    stroke-width:2.5;
-    fill:rgba(255,255,255,.18);
+.inner{
+    fill:none;
+    stroke:white;
+    stroke-width:2.6;
+    opacity:.95;
 }
 
-.d8 polygon:first-child{
-    fill:#b985ff;
+.d8 .outer{
+    fill:#b68df5;
 }
 
-.d10 polygon:first-child{
-    fill:#72b6ff;
+.d10 .outer{
+    fill:#76b3f5;
 }
 
-.d12 polygon:first-child{
-    fill:#77df8b;
+.d12 .outer{
+    fill:#8adf9d;
 }
 
-text{
-    font-size:68px;
-    font-weight:bold;
-    fill:#ffffff;
+/* ---------- цифры ---------- */
+
+.dice-number{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:78px;
+
+    font-weight:700;
+
+    color:#fff;
+
+    text-shadow:
+        0 3px 6px rgba(0,0,0,.25);
+
     user-select:none;
-    text-shadow:0 2px 3px rgba(0,0,0,.25);
+
+    transition:
+        transform .09s,
+        opacity .09s;
+
 }
+
+/* ---------- кнопка ---------- */
 
 button{
 
-    padding:18px 60px;
+    border:none;
 
-    font-size:26px;
+    border-radius:14px;
+
+    background:#ffbf36;
+
+    padding:20px 58px;
+
+    font-size:28px;
 
     font-weight:bold;
 
-    border:none;
-
-    border-radius:12px;
-
     cursor:pointer;
 
-    background:#ffbf2f;
+    box-shadow:
+        0 10px 22px rgba(0,0,0,.15);
 
     transition:
         transform .15s,
-        background .2s,
-        box-shadow .2s;
-
-    box-shadow:
-        0 6px 16px rgba(0,0,0,.18);
+        background .2s;
 
 }
 
 button:hover{
 
-    transform:translateY(-2px);
+    background:#ffc949;
 
-    background:#ffc83f;
+    transform:translateY(-2px);
 
 }
 
 button:active{
 
-    transform:scale(.96);
+    transform:scale(.97);
 
 }
 
 button:disabled{
 
+    opacity:.6;
+
     cursor:not-allowed;
 
-    opacity:.65;
+}
+
+/* ---------- мигание цвета ---------- */
+
+.flash1{
+
+    filter:brightness(.72);
 
 }
 
-.rolling{
+.flash2{
 
-    animation:roll .14s linear infinite;
-
-}
-
-.stop{
-
-    animation:bounce .28s;
+    filter:brightness(1.18);
 
 }
 
-@keyframes roll{
+.flash3{
 
-    0%{
-
-        transform:
-            rotate(-8deg)
-            scale(.92);
-
-    }
-
-    50%{
-
-        transform:
-            rotate(8deg)
-            scale(1.08);
-
-    }
-
-    100%{
-
-        transform:
-            rotate(-8deg)
-            scale(.92);
-
-    }
+    filter:brightness(.88);
 
 }
 
-@keyframes bounce{
+.flash4{
 
-    0%{
-
-        transform:scale(1);
-
-    }
-
-    35%{
-
-        transform:scale(1.18);
-
-    }
-
-    70%{
-
-        transform:scale(.92);
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
-    }
+    filter:brightness(1.28);
 
 }
 
-@media (max-width:900px){
+/* ---------- смена цифры ---------- */
+
+.number-change{
+
+    transform:scale(.82);
+
+    opacity:.82;
+
+}
+
+/* ---------- мобильная версия ---------- */
+
+@media(max-width:850px){
+
+    h1{
+
+        font-size:42px;
+
+    }
 
     .dice-container{
 
@@ -215,50 +214,28 @@ button:disabled{
 
     }
 
-    .dice{
+    .die{
 
         width:170px;
         height:170px;
 
     }
 
-    text{
+    .dice-number{
 
-        font-size:56px;
+        font-size:62px;
 
     }
 
 }
 
-@media (max-width:650px){
-
-    h1{
-
-        font-size:32px;
-        margin-bottom:35px;
-
-    }
+@media(max-width:620px){
 
     .dice-container{
 
         flex-direction:column;
 
-        align-items:center;
-
-        gap:28px;
-
-    }
-
-    .dice{
-
-        width:155px;
-        height:155px;
-
-    }
-
-    button{
-
-        width:240px;
+        gap:26px;
 
     }
 
