@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Бросок кубиков</h1>
+
+    <div class="dice-container">
+
+        <!-- D8 -->
+        <div class="dice-block">
+
+            <div class="dice-title">d8</div>
+
+            <svg class="dice d8" viewBox="0 0 200 200">
+
+                <polygon
+                    points="
+                    100,10
+                    180,60
+                    180,140
+                    100,190
+                    20,140
+                    20,60"
+                />
+
+                <polygon
+                    class="inner"
+                    points="
+                    100,25
+                    165,65
+                    165,135
+                    100,175
+                    35,135
+                    35,65"
+                />
+
+                <text
+                    id="value8"
+                    x="100"
+                    y="118"
+                    text-anchor="middle"
+                    dominant-baseline="middle">
+                    1
+                </text>
+
+            </svg>
+
+        </div>
+
+        <!-- D10 -->
+        <div class="dice-block">
+
+            <div class="dice-title">d10</div>
+
+            <svg class="dice d10" viewBox="0 0 200 220">
+
+                <polygon
+                    points="
+                    100,10
+                    165,50
+                    185,110
+                    155,180
+                    100,210
+                    45,180
+                    15,110
+                    35,50"
+                />
+
+                <polygon
+                    class="inner"
+                    points="
+                    100,28
+                    150,60
+                    168,110
+                    145,165
+                    100,190
+                    55,165
+                    32,110
+                    50,60"
+                />
+
+                <text
+                    id="value10"
+                    x="100"
+                    y="125"
+                    text-anchor="middle"
+                    dominant-baseline="middle">
+                    1
+                </text>
+
+            </svg>
+
+        </div>
+
+        <!-- D12 -->
+        <div class="dice-block">
+
+            <div class="dice-title">d12</div>
+
+            <svg class="dice d12" viewBox="0 0 220 220">
+
+                <polygon
+                    points="
+                    70,10
+                    150,10
+                    200,55
+                    210,130
+                    170,195
+                    110,210
+                    50,195
+                    10,130
+                    20,55"
+                />
+
+                <polygon
+                    class="inner"
+                    points="
+                    75,28
+                    145,28
+                    183,62
+                    191,126
+                    160,178
+                    110,190
+                    60,178
+                    29,126
+                    37,62"
+                />
+
+                <text
+                    id="value12"
+                    x="110"
+                    y="122"
+                    text-anchor="middle"
+                    dominant-baseline="middle">
+                    1
+                </text>
+
+            </svg>
+
+        </div>
+
+    </div>
+
+    <button id="rollButton">
+        🎲 СТАРТ
+    </button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
