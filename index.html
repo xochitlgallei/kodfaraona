@@ -1,136 +1,143 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Бросок кубиков</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
-<div class="container">
+<div class="page">
 
     <h1>Бросок кубиков</h1>
 
-    <div class="dice-container">
+    <div class="dice-row">
 
         <!-- d8 -->
-        <div class="dice-block">
 
-            <div class="dice-title">d8</div>
+        <div class="dice-card">
+
+            <div class="dice-name">d8</div>
 
             <div class="die" id="die8">
 
-                <svg class="dice-svg d8" viewBox="0 0 200 200">
+                <svg class="dice-svg" viewBox="0 0 200 200">
 
                     <polygon
-                        class="outer"
+                        class="face face8"
                         points="
                         100,10
-                        180,60
-                        180,140
+                        175,55
+                        175,145
                         100,190
-                        20,140
-                        20,60"/>
+                        25,145
+                        25,55"/>
 
                     <polygon
-                        class="inner"
+                        class="line"
                         points="
-                        100,25
-                        165,65
-                        165,135
-                        100,175
-                        35,135
-                        35,65"/>
+                        100,28
+                        158,63
+                        158,137
+                        100,172
+                        42,137
+                        42,63"/>
 
                 </svg>
 
-                <div class="dice-number" id="value8">1</div>
+                <div class="value" id="value8">1</div>
 
             </div>
 
         </div>
 
         <!-- d10 -->
-        <div class="dice-block">
 
-            <div class="dice-title">d10</div>
+        <div class="dice-card">
+
+            <div class="dice-name">d10</div>
 
             <div class="die" id="die10">
 
-                <svg class="dice-svg d10" viewBox="0 0 200 220">
+                <svg class="dice-svg" viewBox="0 0 200 200">
 
                     <polygon
-                        class="outer"
+                        class="face face10"
                         points="
-                        100,10
-                        165,50
-                        185,110
-                        155,180
-                        100,210
-                        45,180
-                        15,110
-                        35,50"/>
+                        100,8
+                        155,25
+                        190,100
+                        155,175
+                        100,192
+                        45,175
+                        10,100
+                        45,25"/>
 
                     <polygon
-                        class="inner"
+                        class="line"
                         points="
                         100,28
-                        150,60
-                        168,110
-                        145,165
-                        100,190
-                        55,165
-                        32,110
-                        50,60"/>
+                        145,42
+                        168,100
+                        145,158
+                        100,172
+                        55,158
+                        32,100
+                        55,42"/>
 
                 </svg>
 
-                <div class="dice-number" id="value10">1</div>
+                <div class="value" id="value10">1</div>
 
             </div>
 
         </div>
 
         <!-- d12 -->
-        <div class="dice-block">
 
-            <div class="dice-title">d12</div>
+        <div class="dice-card">
+
+            <div class="dice-name">d12</div>
 
             <div class="die" id="die12">
 
-                <svg class="dice-svg d12" viewBox="0 0 220 220">
+                <svg class="dice-svg" viewBox="0 0 200 200">
 
                     <polygon
-                        class="outer"
+                        class="face face12"
                         points="
-                        70,10
-                        150,10
-                        200,55
-                        210,130
-                        170,195
-                        110,210
-                        50,195
-                        10,130
-                        20,55"/>
+                        60,10
+                        140,10
+                        185,50
+                        190,120
+                        160,180
+                        100,195
+                        40,180
+                        10,120
+                        15,50"/>
 
                     <polygon
-                        class="inner"
+                        class="line"
                         points="
-                        75,28
-                        145,28
-                        183,62
-                        191,126
-                        160,178
-                        110,190
-                        60,178
-                        29,126
-                        37,62"/>
+                        65,28
+                        135,28
+                        167,58
+                        171,118
+                        148,164
+                        100,176
+                        52,164
+                        29,118
+                        33,58"/>
 
                 </svg>
 
-                <div class="dice-number" id="value12">1</div>
+                <div class="value" id="value12">1</div>
 
             </div>
 
