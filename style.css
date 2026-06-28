@@ -1,0 +1,265 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#ffffff;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#222;
+}
+
+.container{
+    width:min(1100px,95%);
+    text-align:center;
+}
+
+h1{
+    font-size:42px;
+    margin-bottom:55px;
+    font-weight:700;
+}
+
+.dice-container{
+    display:flex;
+    justify-content:center;
+    gap:60px;
+    flex-wrap:wrap;
+    margin-bottom:60px;
+}
+
+.dice-block{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.dice-title{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:18px;
+    letter-spacing:1px;
+}
+
+.dice{
+    width:220px;
+    height:220px;
+    overflow:visible;
+    transition:
+        transform .18s ease,
+        filter .25s ease;
+}
+
+.dice:hover{
+    transform:scale(1.04);
+}
+
+.dice polygon:first-child{
+    stroke:#222;
+    stroke-width:6;
+    fill:#dddddd;
+}
+
+.dice .inner{
+    stroke:#ffffff;
+    stroke-width:2.5;
+    fill:rgba(255,255,255,.18);
+}
+
+.d8 polygon:first-child{
+    fill:#b985ff;
+}
+
+.d10 polygon:first-child{
+    fill:#72b6ff;
+}
+
+.d12 polygon:first-child{
+    fill:#77df8b;
+}
+
+text{
+    font-size:68px;
+    font-weight:bold;
+    fill:#ffffff;
+    user-select:none;
+    text-shadow:0 2px 3px rgba(0,0,0,.25);
+}
+
+button{
+
+    padding:18px 60px;
+
+    font-size:26px;
+
+    font-weight:bold;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:#ffbf2f;
+
+    transition:
+        transform .15s,
+        background .2s,
+        box-shadow .2s;
+
+    box-shadow:
+        0 6px 16px rgba(0,0,0,.18);
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:#ffc83f;
+
+}
+
+button:active{
+
+    transform:scale(.96);
+
+}
+
+button:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.65;
+
+}
+
+.rolling{
+
+    animation:roll .14s linear infinite;
+
+}
+
+.stop{
+
+    animation:bounce .28s;
+
+}
+
+@keyframes roll{
+
+    0%{
+
+        transform:
+            rotate(-8deg)
+            scale(.92);
+
+    }
+
+    50%{
+
+        transform:
+            rotate(8deg)
+            scale(1.08);
+
+    }
+
+    100%{
+
+        transform:
+            rotate(-8deg)
+            scale(.92);
+
+    }
+
+}
+
+@keyframes bounce{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    35%{
+
+        transform:scale(1.18);
+
+    }
+
+    70%{
+
+        transform:scale(.92);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+@media (max-width:900px){
+
+    .dice-container{
+
+        gap:35px;
+
+    }
+
+    .dice{
+
+        width:170px;
+        height:170px;
+
+    }
+
+    text{
+
+        font-size:56px;
+
+    }
+
+}
+
+@media (max-width:650px){
+
+    h1{
+
+        font-size:32px;
+        margin-bottom:35px;
+
+    }
+
+    .dice-container{
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:28px;
+
+    }
+
+    .dice{
+
+        width:155px;
+        height:155px;
+
+    }
+
+    button{
+
+        width:240px;
+
+    }
+
+}
