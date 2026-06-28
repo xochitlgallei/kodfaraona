@@ -1,116 +1,257 @@
-const button = document.getElementById("rollButton");
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-const dice = [
-    {
-        die: document.getElementById("die8"),
-        number: document.getElementById("value8"),
-        sides: 8
-    },
-    {
-        die: document.getElementById("die10"),
-        number: document.getElementById("value10"),
-        sides: 10
-    },
-    {
-        die: document.getElementById("die12"),
-        number: document.getElementById("value12"),
-        sides: 12
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#ffffff;
+    color:#222;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.page{
+    width:min(1200px,95%);
+    text-align:center;
+}
+
+h1{
+    font-size:64px;
+    margin-bottom:70px;
+}
+
+.dice-row{
+    display:flex;
+    justify-content:center;
+    gap:70px;
+    flex-wrap:wrap;
+    margin-bottom:60px;
+}
+
+.dice-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.dice-name{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.die{
+
+    position:relative;
+
+    width:220px;
+
+    height:220px;
+
+}
+
+.dice-svg{
+
+    width:100%;
+
+    height:100%;
+
+    display:block;
+
+    transition:filter .12s linear;
+
+}
+
+/* ---------- цвета ---------- */
+
+.face{
+
+    stroke:#222;
+
+    stroke-width:6;
+
+}
+
+.face8{
+
+    fill:#b68df5;
+
+}
+
+.face10{
+
+    fill:#76b3f5;
+
+}
+
+.face12{
+
+    fill:#88df98;
+
+}
+
+.line{
+
+    fill:none;
+
+    stroke:#ffffff;
+
+    stroke-width:3;
+
+}
+
+/* ---------- цифра ---------- */
+
+.value{
+
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:78px;
+
+    font-weight:700;
+
+    color:white;
+
+    line-height:1;
+
+    text-shadow:
+        0 3px 6px rgba(0,0,0,.25);
+
+    user-select:none;
+
+    transition:
+        transform .08s,
+        opacity .08s;
+
+}
+
+.number-change{
+
+    transform:
+        translate(-50%,-50%)
+        scale(.82);
+
+    opacity:.7;
+
+}
+
+/* ---------- переливание ---------- */
+
+.flash-dark{
+
+    filter:brightness(.72);
+
+}
+
+.flash-normal{
+
+    filter:brightness(1);
+
+}
+
+.flash-light{
+
+    filter:brightness(1.22);
+
+}
+
+/* ---------- кнопка ---------- */
+
+button{
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#ffbe33;
+
+    padding:20px 60px;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 12px 24px rgba(0,0,0,.15);
+
+    transition:.15s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+/* ---------- мобильная ---------- */
+
+@media (max-width:900px){
+
+    h1{
+
+        font-size:46px;
+
     }
-];
 
-let rolling = false;
+    .dice-row{
 
-function random(max) {
-    return Math.floor(Math.random() * max) + 1;
-}
+        gap:35px;
 
-const flashClasses = [
-    "flash1",
-    "flash2",
-    "flash3",
-    "flash4"
-];
+    }
 
-function animateNumber(die) {
+    .die{
 
-    die.number.classList.add("number-change");
+        width:170px;
 
-    setTimeout(() => {
-        die.number.classList.remove("number-change");
-    }, 70);
+        height:170px;
+
+    }
+
+    .value{
+
+        font-size:60px;
+
+    }
 
 }
 
-function flashDie(die) {
+@media (max-width:620px){
 
-    flashClasses.forEach(c => die.die.classList.remove(c));
+    .dice-row{
 
-    const cls = flashClasses[Math.floor(Math.random() * flashClasses.length)];
+        flex-direction:column;
 
-    die.die.classList.add(cls);
-
-}
-
-function clearFlash(die) {
-
-    flashClasses.forEach(c => die.die.classList.remove(c));
+    }
 
 }
-
-function stopDie(die) {
-
-    clearFlash(die);
-
-    die.number.textContent = random(die.sides);
-
-    animateNumber(die);
-
-}
-
-button.addEventListener("click", () => {
-
-    if (rolling) return;
-
-    rolling = true;
-
-    button.disabled = true;
-
-    const timer = setInterval(() => {
-
-        dice.forEach(die => {
-
-            die.number.textContent = random(die.sides);
-
-            animateNumber(die);
-
-            flashDie(die);
-
-        });
-
-    }, 70);
-
-    setTimeout(() => {
-
-        stopDie(dice[0]);
-
-    }, 1000);
-
-    setTimeout(() => {
-
-        stopDie(dice[1]);
-
-    }, 1200);
-
-    setTimeout(() => {
-
-        stopDie(dice[2]);
-
-        clearInterval(timer);
-
-        rolling = false;
-
-        button.disabled = false;
-
-    }, 1400);
-
-});
