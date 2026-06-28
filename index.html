@@ -19,6 +19,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background-color 0.5s ease;
+    }
+
+    body.timer-finished {
+      background: #fef3c7;
     }
 
     .container {
@@ -29,6 +34,7 @@
       flex-direction: column;
       align-items: center;
       gap: 3rem;
+      position: relative;
     }
 
     .title {
@@ -88,21 +94,31 @@
       z-index: 10;
     }
 
-    .start-btn {
+    .buttons-container {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .start-btn, .timer-btn {
       padding: clamp(0.9rem, 2vw, 1.1rem) clamp(2.5rem, 6vw, 4rem);
       font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       font-weight: 800;
       color: #0f172a;
-      background: #fbbf24;
       border: none;
       border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
       letter-spacing: 0.05em;
       transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
+    }
+
+    .start-btn {
+      background: #fbbf24;
+      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
     }
 
     .start-btn:hover:not(:disabled) {
@@ -119,6 +135,65 @@
       cursor: not-allowed;
     }
 
+    .timer-btn {
+      background: #f97316;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+      display: none;
+    }
+
+    .timer-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(249, 115, 22, 0.55);
+    }
+
+    .timer-btn:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .timer-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .timer-btn.visible {
+      display: inline-flex;
+    }
+
+    .timer-widget {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: #ffffff;
+      border: 4px solid #f97316;
+      border-radius: 16px;
+      padding: 1rem 1.5rem;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #f97316;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
+      display: none;
+      z-index: 100;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .timer-widget.visible {
+      display: block;
+    }
+
+    .timer-widget.warning {
+      background: #fef3c7;
+      border-color: #dc2626;
+      color: #dc2626;
+      animation: pulse 0.5s ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
     @media (max-width: 480px) {
       .die .label {
         top: -1.6rem;
@@ -127,10 +202,18 @@
       .dice-container {
         gap: clamp(1.5rem, 4vw, 2.5rem);
       }
+      .timer-widget {
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        padding: 0.75rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="timer-widget" id="timerWidget">30</div>
+
   <main class="container">
     <h1 class="title">Бросок кубиков</h1>
 
@@ -139,7 +222,7 @@
       <div class="die die-d8">
         <span class="label">d8</span>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="100,15 160,40 185,100 160,160 100,185 40,160 15,100 40,40" fill="#a855f7" stroke="#0f172a" stroke-width="8" stroke-linejoin="round"/>
+          <polygon points="100,15 160,40 185,100 160,160 100,185 40,160 15,100 40,40" fill="#f97316" stroke="#0f172a" stroke-width="8" stroke-linejoin="round"/>
           <polygon points="100,28 151,49 172,100 151,151 100,172 49,151 28,100 49,49" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
           <line x1="100" y1="28" x2="100" y2="172" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
           <line x1="28" y1="100" x2="172" y2="100" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
@@ -153,7 +236,7 @@
       <div class="die die-d10">
         <span class="label">d10</span>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="100,15 150,31 181,74 181,126 150,169 100,185 50,169 19,126 19,74 50,31" fill="#3b82f6" stroke="#0f172a" stroke-width="8" stroke-linejoin="round"/>
+          <polygon points="100,15 150,31 181,74 181,126 150,169 100,185 50,169 19,126 19,74 50,31" fill="#ef4444" stroke="#0f172a" stroke-width="8" stroke-linejoin="round"/>
           <polygon points="100,28 142,42 169,79 169,121 142,158 100,172 58,158 31,121 31,79 58,42" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
           <line x1="100" y1="28" x2="100" y2="172" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
           <line x1="31" y1="79" x2="169" y2="121" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
@@ -168,7 +251,7 @@
       <div class="die die-d12">
         <span class="label">d12</span>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="100,15 143,26 174,57 185,100 174,143 143,174 100,185 57,174 26,143 15,100 26,57 57,26" fill="#22c55e" stroke="#0f172a" stroke-width="8" stroke-linejoin="round"/>
+          <polygon points="100,15 143,26 174,57 185,100 174,143 143,174 100,185 57,174 26,143 15,100 26,57 57,26" fill="#eab308" stroke="#0f172a" stroke-width="8" stroke-linejoin="round"/>
           <polygon points="100,28 136,37 163,64 172,100 163,136 136,163 100,172 64,163 37,136 28,100 37,64 64,37" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
           <line x1="100" y1="28" x2="100" y2="172" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
           <line x1="28" y1="100" x2="172" y2="100" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
@@ -181,12 +264,17 @@
       </div>
     </div>
 
-    <button class="start-btn" type="button"> СТАРТ</button>
+    <div class="buttons-container">
+      <button class="start-btn" type="button">🎲 Новый раунд</button>
+      <button class="timer-btn" type="button">⏱ Таймер 30с</button>
+    </div>
   </main>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.querySelector('.start-btn');
+      const timerBtn = document.querySelector('.timer-btn');
+      const timerWidget = document.getElementById('timerWidget');
 
       const dice = [
         { el: document.querySelector('.die-d8'),  sides: 8  },
@@ -203,6 +291,8 @@
       const TICK_MAX = 80;
 
       let isRolling = false;
+      let timerInterval = null;
+      let timeLeft = 30;
 
       const randInt = (max) => Math.floor(Math.random() * max) + 1;
       const randTick = () => TICK_MIN + Math.random() * (TICK_MAX - TICK_MIN);
@@ -226,10 +316,46 @@
         return () => clearTimeout(tickTimer);
       };
 
+      const startTimer = () => {
+        if (timerInterval) return;
+        
+        timeLeft = 30;
+        timerWidget.textContent = timeLeft;
+        timerWidget.classList.add('visible');
+        timerWidget.classList.remove('warning');
+        timerBtn.disabled = true;
+
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          timerWidget.textContent = timeLeft;
+
+          if (timeLeft <= 5) {
+            timerWidget.classList.add('warning');
+          }
+
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.body.classList.add('timer-finished');
+            timerBtn.disabled = false;
+          }
+        }, 1000);
+      };
+
       btn.addEventListener('click', () => {
         if (isRolling) return;
         isRolling = true;
         btn.disabled = true;
+        timerBtn.classList.remove('visible');
+
+        // Сброс таймера и фона
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+        timerWidget.classList.remove('visible', 'warning');
+        document.body.classList.remove('timer-finished');
+        timerBtn.disabled = false;
 
         const stopAt = Date.now() + ROLL_DURATION;
         const cancellers = dice.map(die => rollDie(die, stopAt));
@@ -241,8 +367,11 @@
           });
           isRolling = false;
           btn.disabled = false;
+          timerBtn.classList.add('visible');
         }, ROLL_DURATION);
       });
+
+      timerBtn.addEventListener('click', startTimer);
     });
   </script>
 </body>
