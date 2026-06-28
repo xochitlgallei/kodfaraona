@@ -1,157 +1,60 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Бросок кубиков</title>
-
-    <link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кубики d8, d10, d12</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <main class="container">
+    <h1 class="title">Бросок кубиков</h1>
 
-<div class="page">
+    <div class="dice-container">
+      <!-- d8: октаэдр (ромб с диагоналями) -->
+      <div class="die die-d8" data-sides="8">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="50,10 90,50 50,50" fill="#60a5fa" stroke="#1e3a8a" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="90,50 50,90 50,50" fill="#3b82f6" stroke="#1e3a8a" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="50,90 10,50 50,50" fill="#2563eb" stroke="#1e3a8a" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="10,50 50,10 50,50" fill="#93c5fd" stroke="#1e3a8a" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span class="value">8</span>
+        <span class="label">d8</span>
+      </div>
 
-    <h1>Бросок кубиков</h1>
+      <!-- d10: трапецоэдр (острый верх/низ + зигзаг) -->
+      <div class="die die-d10" data-sides="10">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="50,5 15,40 85,40" fill="#68d391" stroke="#14532d" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="15,40 32.5,60 50,40" fill="#48bb78" stroke="#14532d" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="50,40 32.5,60 67.5,60" fill="#38a169" stroke="#14532d" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="50,40 67.5,60 85,40" fill="#2f855a" stroke="#14532d" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="15,60 85,60 50,95" fill="#22543d" stroke="#14532d" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span class="value">10</span>
+        <span class="label">d10</span>
+      </div>
 
-    <div class="dice-row">
-
-        <!-- d8 -->
-
-        <div class="dice-card">
-
-            <div class="dice-name">d8</div>
-
-            <div class="die" id="die8">
-
-                <svg class="dice-svg" viewBox="0 0 200 200">
-
-                    <polygon
-                        class="face face8"
-                        points="
-                        100,10
-                        175,55
-                        175,145
-                        100,190
-                        25,145
-                        25,55"/>
-
-                    <polygon
-                        class="line"
-                        points="
-                        100,28
-                        158,63
-                        158,137
-                        100,172
-                        42,137
-                        42,63"/>
-
-                </svg>
-
-                <div class="value" id="value8">1</div>
-
-            </div>
-
-        </div>
-
-        <!-- d10 -->
-
-        <div class="dice-card">
-
-            <div class="dice-name">d10</div>
-
-            <div class="die" id="die10">
-
-                <svg class="dice-svg" viewBox="0 0 200 200">
-
-                    <polygon
-                        class="face face10"
-                        points="
-                        100,8
-                        155,25
-                        190,100
-                        155,175
-                        100,192
-                        45,175
-                        10,100
-                        45,25"/>
-
-                    <polygon
-                        class="line"
-                        points="
-                        100,28
-                        145,42
-                        168,100
-                        145,158
-                        100,172
-                        55,158
-                        32,100
-                        55,42"/>
-
-                </svg>
-
-                <div class="value" id="value10">1</div>
-
-            </div>
-
-        </div>
-
-        <!-- d12 -->
-
-        <div class="dice-card">
-
-            <div class="dice-name">d12</div>
-
-            <div class="die" id="die12">
-
-                <svg class="dice-svg" viewBox="0 0 200 200">
-
-                    <polygon
-                        class="face face12"
-                        points="
-                        60,10
-                        140,10
-                        185,50
-                        190,120
-                        160,180
-                        100,195
-                        40,180
-                        10,120
-                        15,50"/>
-
-                    <polygon
-                        class="line"
-                        points="
-                        65,28
-                        135,28
-                        167,58
-                        171,118
-                        148,164
-                        100,176
-                        52,164
-                        29,118
-                        33,58"/>
-
-                </svg>
-
-                <div class="value" id="value12">1</div>
-
-            </div>
-
-        </div>
-
+      <!-- d12: додекаэдр (шестиугольник с пятиугольником внутри) -->
+      <div class="die die-d12" data-sides="12">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="#c4b5fd" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="50,5 89,27.5 69,43.8 50,30" fill="#a78bfa" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="89,27.5 89,72.5 61.8,66.2 69,43.8" fill="#8b5cf6" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="89,72.5 50,95 38.2,66.2 61.8,66.2" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="50,95 11,72.5 31,43.8 38.2,66.2" fill="#6d28d9" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="11,72.5 11,27.5 50,5 31,43.8" fill="#5b21b6" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="50,30 69,43.8 61.8,66.2 38.2,66.2 31,43.8" fill="#ede9fe" stroke="#4c1d95" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span class="value">12</span>
+        <span class="label">d12</span>
+      </div>
     </div>
 
-    <button id="rollButton">
-        🎲 СТАРТ
-    </button>
+    <button class="start-btn" type="button">🎲 СТАРТ</button>
+  </main>
 
-</div>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
