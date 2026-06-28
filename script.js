@@ -2,65 +2,113 @@ const button = document.getElementById("rollButton");
 
 const dice = [
     {
-        element: document.querySelector(".d8"),
-        text: document.getElementById("value8"),
-        sides: 8
+        sides: 8,
+        die: document.getElementById("die8"),
+        value: document.getElementById("value8")
     },
     {
-        element: document.querySelector(".d10"),
-        text: document.getElementById("value10"),
-        sides: 10
+        sides: 10,
+        die: document.getElementById("die10"),
+        value: document.getElementById("value10")
     },
     {
-        element: document.querySelector(".d12"),
-        text: document.getElementById("value12"),
-        sides: 12
+        sides: 12,
+        die: document.getElementById("die12"),
+        value: document.getElementById("value12")
     }
 ];
 
-let rolling = false;
+let isRolling = false;
 
-function randomValue(max) {
+function rnd(max) {
     return Math.floor(Math.random() * max) + 1;
 }
 
-function stopDie(die) {
+function animateNumber(item) {
 
-    die.element.classList.remove("rolling");
-
-    die.text.textContent = randomValue(die.sides);
-
-    die.element.classList.add("stop");
+    item.value.classList.add("number-change");
 
     setTimeout(() => {
-        die.element.classList.remove("stop");
-    }, 300);
+        item.value.classList.remove("number-change");
+    }, 70);
+
+}
+
+let flashState = 0;
+
+function flash(item) {
+
+    item.die.classList.remove(
+        "flash-dark",
+        "flash-normal",
+        "flash-light"
+    );
+
+    switch (flashState) {
+
+        case 0:
+            item.die.classList.add("flash-dark");
+            break;
+
+        case 1:
+            item.die.classList.add("flash-light");
+            break;
+
+        case 2:
+            item.die.classList.add("flash-normal");
+            break;
+
+    }
+
+    flashState++;
+
+    if (flashState > 2)
+        flashState = 0;
+
+}
+
+function clearFlash(item) {
+
+    item.die.classList.remove(
+        "flash-dark",
+        "flash-light",
+        "flash-normal"
+    );
+
+}
+
+function stopDie(item) {
+
+    clearFlash(item);
+
+    item.value.textContent = rnd(item.sides);
+
+    animateNumber(item);
 
 }
 
 button.addEventListener("click", () => {
 
-    if (rolling) return;
+    if (isRolling)
+        return;
 
-    rolling = true;
+    isRolling = true;
 
     button.disabled = true;
 
-    dice.forEach(die => {
+    const timer = setInterval(() => {
 
-        die.element.classList.add("rolling");
+        dice.forEach(item => {
 
-    });
+            item.value.textContent = rnd(item.sides);
 
-    const interval = setInterval(() => {
+            animateNumber(item);
 
-        dice.forEach(die => {
-
-            die.text.textContent = randomValue(die.sides);
+            flash(item);
 
         });
 
-    }, 45);
+    }, 75);
 
     setTimeout(() => {
 
@@ -78,9 +126,9 @@ button.addEventListener("click", () => {
 
         stopDie(dice[2]);
 
-        clearInterval(interval);
+        clearInterval(timer);
 
-        rolling = false;
+        isRolling = false;
 
         button.disabled = false;
 
