@@ -7,30 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { el: document.querySelector('.die-d12'), sides: 12 }
   ];
 
-  // Строим правильные многоугольники
-  const buildPolygon = (sides, cx, cy, radius) => {
-    const points = [];
-    // Смещение -90°, чтобы вершина смотрела вверх
-    const offset = -Math.PI / 2;
-    for (let i = 0; i < sides; i++) {
-      const angle = offset + (2 * Math.PI * i) / sides;
-      const x = cx + radius * Math.cos(angle);
-      const y = cy + radius * Math.sin(angle);
-      points.push(`${x.toFixed(2)},${y.toFixed(2)}`);
-    }
-    return points.join(' ');
-  };
-
   dice.forEach(d => {
-    const outer = d.el.querySelector('.shape');
-    const inner = d.el.querySelector('.shape-inner');
     d.valueEl = d.el.querySelector('.value');
-
-    const outerPoints = buildPolygon(d.sides, 100, 100, 90);
-    const innerPoints = buildPolygon(d.sides, 100, 100, 78);
-
-    outer.setAttribute('points', outerPoints);
-    inner.setAttribute('points', innerPoints);
   });
 
   const ROLL_DURATION = 1000;
